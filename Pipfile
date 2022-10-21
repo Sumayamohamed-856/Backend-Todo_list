@@ -9,6 +9,7 @@ flask-sqlalchemy = "*"
 email-validator = "*"
 flask-jwt-extended = "*"
 flask-bcrypt = "*"
+gunicorn = "*"
 
 [dev-packages]
 
