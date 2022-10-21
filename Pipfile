@@ -11,6 +11,7 @@ flask-jwt-extended = "*"
 flask-bcrypt = "*"
 gunicorn = "*"
 flask-cors = "*"
+sqlalchemy = "*"
 
 [dev-packages]
 

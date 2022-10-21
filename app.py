@@ -11,7 +11,9 @@ from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+basedir = os.path.abspath(os.path.dirname(__file__))
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.sqlite3'
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 app.config['CORS_HEADERS'] = 'Content-Type'
 
