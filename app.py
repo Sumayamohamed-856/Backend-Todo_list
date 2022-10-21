@@ -8,21 +8,20 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from flask_bcrypt import Bcrypt
+from flask_cors import CORS
 
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dbdir/test.db'
-file_path = os.path.abspath(os.getcwd()) + "\database.db"
-print('aaaaaaaaaaaaaaaaa')
-print(file_path)
-print('aaaaaaaaaaaaaa')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+file_path
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
+CORS(app)
 
-db.init_app(app)
+
+# db.init_app(app)
 
 class User(db.Model):
   __tablename__ = 'users'
@@ -117,7 +116,6 @@ def login():
   password = post_data.get('password', None)
 
   user = User.query.filter_by(email=email).first() 
-  
   if not user:
     return generate_response(404, 'User not found.')
   
@@ -142,7 +140,6 @@ def list_todo(todo_id):
         return generate_response(404, 'Task not found.')
 
     return jsonify(todo_serializer(todo))
-
 
 @app.route('/todos/', methods=['POST'])
 @jwt_required()
@@ -170,8 +167,9 @@ def update_todo(todo_id):
     if not post_data:
         return generate_response(400, 'Invalid payload.')
 
-    todo.done = post_data.get('done')
-    todo.task = post_data.get('task')
+
+    todo.done = post_data.get('done', todo.done)
+    todo.task = post_data.get('task', todo.task)
     db.session.commit()
 
     return generate_response(200, 'Task updated.', todo_serializer(todo))

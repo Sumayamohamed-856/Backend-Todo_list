@@ -10,6 +10,7 @@ email-validator = "*"
 flask-jwt-extended = "*"
 flask-bcrypt = "*"
 gunicorn = "*"
+flask-cors = "*"
 
 [dev-packages]
 
