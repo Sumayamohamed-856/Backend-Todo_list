@@ -12,6 +12,7 @@ flask-bcrypt = "*"
 gunicorn = "*"
 flask-cors = "*"
 sqlalchemy = "*"
+dependency = "*"
 
 [dev-packages]
 
