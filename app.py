@@ -51,7 +51,10 @@ class Todo(db.Model):
 
 
 with app.app_context():
-  db.create_all()
+  try:
+    db.create_all()
+  except:
+    print('error')
 
 
 @app.errorhandler(404)
